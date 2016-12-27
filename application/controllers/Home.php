@@ -13,22 +13,43 @@ class Home extends CI_Controller{
 	{
 
 		$this->form_validation->set_rules('username', 'Username', 'required|trim|min_length[5]|is_unique[member.Username ]');
-		$this->form_validation->set_rules('email', 'E-Mail','required|trim|valid_email|is_unique[member.Email ]');
-		$this->form_validation->set_rules('password', 'Password', 'required|min_length[5]|');
-		$this->form_validation->set_rules('repassword', 'Konfirmasi Password', 'required|matches[password]');
-
+		$this->form_validation->set_rules('email', 'E-Mail','required|trim|valid_email|is_unique[member.Email]');
+		$this->form_validation->set_rules('password', 'Password', 'required|min_length[5]');
+		$this->form_validation->set_rules('repassword', 'Konfirmasi_Password', 'required|matches[password]');
+		$this->form_validation->set_rules('hobi[]', 'Hobi', 'required');
 		if($this->form_validation->run()){
-			$username = $this->input->post('username');
-			$password = $this->input->post('password');
-			$email = $this->input->post('email');
-
-			echo "$username";
-			echo "$password";
-			echo "$email";
+			$id = $this->User_model->insertMember();
+			if($id >= 1){
+				$data = array(
+					'userId'  => $id,
+					'logged_in' => TRUE
+					);
+				$this->session->set_userdata($data);
+				redirect('home/admin');
+			}else{
+				redirect('http://google.co.id');
+			}
 		}else{
 			$data['Content'] = 'home/home';
 			$this->load->view('home/content',$data);
 		}
 
+	}
+
+	public function admin()
+	{
+		if($this->session->userdata('logged_in')) {
+			$this->load->view('home/dashboard');
+		}else{
+			$this->session->set_flashdata('noLogin', 'Harus Login terlebih dahulu');
+			redirect('home');
+		}
+		
+	}
+
+	public function logout()
+	{
+		$this->session->sess_destroy();
+		redirect('home');
 	}
 }
