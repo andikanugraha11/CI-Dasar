@@ -5,8 +5,33 @@ class Home extends CI_Controller{
 
 	public function index()
 	{
-		$data['Content'] = 'home/home';
-		$this->load->view('home/content',$data);
+		$this->form_validation->set_rules('username', 'Username', 'required|trim');
+		$this->form_validation->set_rules('password', 'Password', 'required');
+		if($this->form_validation->run())
+		{
+			$user_data = $this->User_model->getMember();
+			if($user_data != null)
+			{
+				$data = array(
+					'userId'  => $user_data->id,
+					'logged_in' => TRUE
+					);
+				$this->session->set_userdata($data);
+				redirect('home/admin');
+			}
+				else
+			{
+				$this->session->set_flashdata('salah', 'Password atau Username salah');
+				redirect('home');
+			}
+			
+		}
+			else
+		{
+			$data['Content'] = 'home/login';
+			$this->load->view('home/content',$data);
+		}
+
 	}
 
 	public function daftar()
@@ -27,7 +52,8 @@ class Home extends CI_Controller{
 				$this->session->set_userdata($data);
 				redirect('home/admin');
 			}else{
-				redirect('http://google.co.id');
+				$this->session->set_flashdata('gagal', 'Gagal Membuat User');
+				redirect('home/daftar');
 			}
 		}else{
 			$data['Content'] = 'home/home';

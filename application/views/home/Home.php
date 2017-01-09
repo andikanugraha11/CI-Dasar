@@ -101,5 +101,5 @@
 		<input class="btn btn-success btn-lg" type="submit" name="" value="Masuk">
 	</form>	 -->
 	<div><?php echo validation_errors(); ?></div>
-	<div class="text-danger"><?php echo $this->session->flashdata('noLogin'); ?></div>
+	<div class="text-danger"><?php echo $this->session->flashdata('gagal'); ?></div>
 </div>
