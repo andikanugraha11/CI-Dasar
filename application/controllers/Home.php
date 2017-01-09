@@ -65,7 +65,8 @@ class Home extends CI_Controller{
 	public function admin()
 	{
 		if($this->session->userdata('logged_in')) {
-			$this->load->view('home/dashboard');
+			$data['Content'] = 'admin/dashboard';
+			$this->load->view('admin/content',$data);
 		}else{
 			$this->session->set_flashdata('noLogin', 'Harus Login terlebih dahulu');
 			redirect('home');

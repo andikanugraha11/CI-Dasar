@@ -35,7 +35,7 @@
 		        'type'  => 'submit',
 		        'name'  => 'submit',
 		        'class' => 'btn btn-primary',
-		        'value' => 'Daftar'
+		        'value' => 'LOGIN'
 			);
 		echo form_submit($data);
 		echo form_close();
