@@ -10,6 +10,7 @@ class User_auth extends CI_Controller{
 		// $clientSecret ='woLIQbgXvQu6BY4YRZ3bK0gS';
 		// $redirectUrl = 'http://localhost/belajarRD/user_auth';
 		$this->load->library('google');
+		$this->load->library('FacebookAuth');
 		$client = new Google_Client();
 		// $client->setApplicationName('Login sob');
 		$client->setAuthConfig(APPPATH."/libraries/google-api-php-client/credential.json");
