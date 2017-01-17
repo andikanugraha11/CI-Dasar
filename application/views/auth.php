@@ -1,9 +1,11 @@
 <html>
 <head>
+<meta name="google-signin-client_id" content="627484450598-bif69q62j2tv83762o8n468m13df5he0.apps.googleusercontent.com">
 <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>css/style.css">
 <link rel="stylesheet" media="screen and (max-width: 1200px) and (min-width: 0px)" type="text/css" href="<?php echo base_url(); ?>css/styleresponsive1.css">
 <link rel="stylesheet" media="screen and (max-width: 600px) and (min-width: 0px)" type="text/css" href="<?php echo base_url(); ?>css/styleresponsive2.css">
 <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro|Open+Sans+Condensed:300|Raleway' rel='stylesheet' type='text/css'>
+<script src="https://apis.google.com/js/platform.js" async defer></script>
 </head>
 <body>
 <div id="main">
@@ -31,5 +33,15 @@ echo "<p><b>Email : </b>" . $userData->email . "</p>";
 <?php }?>
 </div>
 </div>
+<div class="g-signin2" data-onsuccess="onSignIn"></div>
 </body>
 </html>
+<script type="text/javascript">
+	function onSignIn(googleUser) {
+		  var profile = googleUser.getBasicProfile();
+		  console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
+		  console.log('Name: ' + profile.getName());
+		  console.log('Image URL: ' + profile.getImageUrl());
+		  console.log('Email: ' + profile.getEmail());
+}
+</script>
