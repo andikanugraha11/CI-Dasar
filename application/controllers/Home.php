@@ -10,6 +10,7 @@ class Home extends CI_Controller{
 		if($this->form_validation->run())
 		{
 			$user_data = $this->User_model->getMember();
+			$this->output->set_content_type('application_json');
 			if($user_data != null)
 			{
 				$data = array(
@@ -17,12 +18,11 @@ class Home extends CI_Controller{
 					'logged_in' => TRUE
 					);
 				$this->session->set_userdata($data);
-				redirect('home/admin');
+				$this->output->set_output(json_encode(['objectlogin_dika'=>1]));
 			}
 				else
 			{
-				$this->session->set_flashdata('salah', 'Password atau Username salah');
-				redirect('home');
+				$this->output->set_output(json_encode(['objectlogin_dika'=>0]));
 			}
 			
 		}
@@ -51,15 +51,11 @@ class Home extends CI_Controller{
 					);
 				$this->session->set_userdata($data);
 				redirect('home/admin');
-			}else{
-				$this->session->set_flashdata('gagal', 'Gagal Membuat User');
-				redirect('home/daftar');
 			}
-		}else{
-			$data['Content'] = 'home/home';
-			$this->load->view('home/content',$data);
+			return false;
 		}
-
+		$data['Content'] = 'home/home';
+		$this->load->view('home/content',$data);
 	}
 
 	public function admin()

@@ -1,7 +1,7 @@
 <div class="jumbotron">
 
 	<?php 
-		$attributes = array('id' => 'myform', 'method' => 'post');
+		$attributes = array('id' => 'login', 'method' => 'post');
 		echo form_open('home/index',$attributes);
 	?>
 
@@ -56,3 +56,23 @@
 	<div class="text-danger"><?php echo $this->session->flashdata('noLogin'); ?></div>
 	<div class="text-danger"><?php echo $this->session->flashdata('salah'); ?></div>
 </div>
+
+<script type="text/javascript">
+	$('#login').submit(function(e){
+		e.preventDefault();
+		var url = $(this).attr('action');
+		var postData = $(this).serialize();
+		$.post(url,postData,function(object){
+				if(object.objectlogin_dika ==1){
+					window.location.href='<?=base_url('home/admin')?>';
+				}else{
+					swal({
+						title : "Gagal Masuk",
+						text : "username atau password salah",
+						type : "error",
+						confirmButtonColor: "#DD6B55"
+					});
+				}
+			},'json');
+	});
+</script>
