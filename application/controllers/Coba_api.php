@@ -18,5 +18,14 @@ class Coba_api extends CI_Controller
 		echo $jumlah;
 	}
 
-	
+
+	//ibacor
+	public function DonorDarah()
+	{
+		$data['url1'] = 'http://ibacor.com/api/ayodonor?view=list_darah';
+		$data['url2'] = 'http://ibacor.com/api/ayodonor?view=list_propinsi';
+		$this->load->view('core/header');
+		$this->load->view('donor',$data);
+		$this->load->view('core/footer');
+	}
 }

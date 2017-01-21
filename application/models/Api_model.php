@@ -15,4 +15,10 @@ class Api_model extends CI_Model
 	{
 		return $this->db->get('mahasiswa', $size, $page);
 	}
+
+	// public function ibacorListDarah()
+	// {
+	// 	$obj = json_decode('http://ibacor.com/api/ayodonor?view=list_darah');
+	// 	return $obj;
+	// }
 }
