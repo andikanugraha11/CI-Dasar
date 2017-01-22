@@ -11,8 +11,43 @@
 		  	</select>
 		</div>
 	</div>
-	<div class="col-md-3 well">
-		<div id="lisDarah"></div>
+	<div class="col-md-9 well">
+		<table style="width:100%" id="listDarah" class="table table-condensed table-striped table-hover">
+		<thead>
+		  <tr>
+		    <th>Golongan Darah</th>
+		    <th>Jumlah Stok</th> 
+		    <th>Lokasi</th>
+		  </tr>
+		  </thead>
+		  <tbody>
+		  <tr>
+		    <td>Jill</td>
+		    <td>Smith</td> 
+		    <td>50</td>
+		  </tr>
+		  <tr>
+		    <td>Eve</td>
+		    <td>Jackson</td> 
+		    <td>94</td>
+		  </tr>
+		  </tbody>
+
+		</table>
+		<script type="text/javascript">
+			$('document').ready(function(){
+					console.log('datatables');
+				$('#listDarah').DataTable({
+					"paging" 	: false,
+					"data"		: 'http://ibacor.com/api/ayodonor?view=stok_darah&gol_darah=0&kode_propinsi=0&page=1',
+					"columns"	: [
+										{data : 'lokasi'},
+										{data : 'lokasi'},
+										{data : 'lokasi'}
+								]
+				});
+			});
+		</script>
 	</div>
 </div>
 
