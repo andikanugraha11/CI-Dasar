@@ -12,12 +12,13 @@
 		</div>
 	</div>
 	<div class="col-md-9 well">
-		<table style="width:100%" id="listDarah" class="table table-condensed table-striped table-hover">
+		<table  id="listDarah" class="table table-condensed table-striped table-hover table-bordered">
 		<thead>
 		  <tr>
 		    <th>Golongan Darah</th>
 		    <th>Jumlah Stok</th> 
 		    <th>Lokasi</th>
+		    <th>Stok</th>
 		  </tr>
 		  </thead>
 		  <tbody>
@@ -25,11 +26,7 @@
 		    <td>Jill</td>
 		    <td>Smith</td> 
 		    <td>50</td>
-		  </tr>
-		  <tr>
-		    <td>Eve</td>
-		    <td>Jackson</td> 
-		    <td>94</td>
+		    <td>50</td>
 		  </tr>
 		  </tbody>
 
@@ -37,15 +34,6 @@
 		<script type="text/javascript">
 			$('document').ready(function(){
 					console.log('datatables');
-				$('#listDarah').DataTable({
-					"paging" 	: false,
-					"data"		: 'http://ibacor.com/api/ayodonor?view=stok_darah&gol_darah=0&kode_propinsi=0&page=1',
-					"columns"	: [
-										{data : 'lokasi'},
-										{data : 'lokasi'},
-										{data : 'lokasi'}
-								]
-				});
 			});
 		</script>
 	</div>
@@ -55,13 +43,15 @@
 	$('document').ready(function(){
 		$('#labelProvinsi').hide();
 		$('#provinsi').hide();
+
+		var golongan = null, provinsi = null, halaman =1, table=null;
 		$.get('<?=$url1?>', function(e){
 			var banyak = Object.keys(e.data).length;
 			$('#tipeDarah')
 							.append('<option value="-1">- Silahkan Pilih -</option>')
 							.append('<option value="0">All</option>');
 			for (var i = 1; i < banyak; i++) {
-				$('#tipeDarah').append('<option value=" '+ e.data[i] + '">' + e.data[i] + '</option>');
+				$('#tipeDarah').append('<option value="'+e.data[i]+'">'+e.data[i]+'</option>');
 			}
         });
 
@@ -75,8 +65,64 @@
         	$('#provinsi')
 							.append('<option value="-1">- Silahkan Pilih -</option>')
 			for (var i = 0; i < banyak; i++) {
-				$('#provinsi').append('<option value=" '+ e.data[i].kode + '">' + e.data[i].propinsi + '</option>');
+				$('#provinsi').append('<option value="'+e.data[i].kode+'">'+e.data[i].propinsi+'</option>');
 			}
         });
+
+        $('#tipeDarah').change(function(){
+        	golongan = $(this).val();
+        	console.log(golongan);
+        	if ((golongan != null) & (provinsi != null)) {
+        		if((golongan == -1) || (provinsi == -1)) return false;
+        		table = $('#listDarah').DataTable({
+        			"paging" 	: false,
+					"ajax"		: 'http://ibacor.com/api/ayodonor?view=stok_darah&gol_darah='+golongan+'&kode_propinsi='+provinsi+'&page='+halaman,
+					"columns"	:[
+									{ data : 'gol_darah' },
+									{ data : 'jum_stok' },
+									{ data : 'lokasi' },
+									null
+									// { data : 'stok_id' },
+									// { data : '<a class="btn btn-primary">Detail</a>' },
+					],
+					"columnDefs": [ {
+				            "targets": -1,
+				            "defaultContent": '<a class="btn btn-primary">Detail</a>'
+				        } ]
+				});
+        	}
+        	console.log('http://ibacor.com/api/ayodonor?view=stok_darah&gol_darah='+golongan+'&kode_propinsi='+provinsi+'&page='+halaman)
+        });
+
+        $('#provinsi').change(function(){
+        	provinsi = $(this).val();
+        	console.log(provinsi);
+        	if ((golongan != null) & (provinsi != null)) {
+        		if((golongan == -1) || (provinsi == -1)) return false;
+        		table = $('#listDarah').DataTable({
+        			"paging" 	: false,
+					"ajax"		: 'http://ibacor.com/api/ayodonor?view=stok_darah&gol_darah='+golongan+'&kode_propinsi='+provinsi+'&page='+halaman,
+					"columns"	:[
+									{ data : 'gol_darah' },
+									{ data : 'jum_stok' },
+									{ data : 'lokasi' },
+									null
+									// { data : 'stok_id' },
+									// { data : '<a class="btn btn-primary">Detail</a>' },
+					],
+					"columnDefs": [ {
+				            "targets": -1,
+				            "defaultContent": '<a class="btn btn-primary">Detail</a>'
+				        } ]
+				});
+        	}
+        	console.log('http://ibacor.com/api/ayodonor?view=stok_darah&gol_darah='+golongan+'&kode_propinsi='+provinsi+'&page='+halaman)
+        });
+
+        $('#listDarah tbody').on( 'click', 'a', function () {
+		    var data = table.row( $(this).parents('tr') ).data();
+		    alert( data[0]);
+		});
+
 	});
 </script>
