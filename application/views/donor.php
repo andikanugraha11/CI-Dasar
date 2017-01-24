@@ -112,7 +112,7 @@
 					],
 					"columnDefs": [ {
 				            "targets": -1,
-				            "defaultContent": '<a class="btn btn-primary">Detail</a>'
+				            "defaultContent": '<a type="button" data-toggle="modal" data-target=".detailStok" class="btn btn-primary">Detail</a>'
 				        } ]
 				});
         	}
@@ -121,8 +121,73 @@
 
         $('#listDarah tbody').on( 'click', 'a', function () {
 		    var data = table.row($(this).parents('tr') ).data();
+		    $('#detailDari').text(data.lokasi);
 		    console.log(data.stok_id);
+		    $('#detailDarah').DataTable({
+        			// "paging" 	: false,
+					"ajax"		: 'http://ibacor.com/api/ayodonor?view=detail_stok&stok_id='+data.stok_id,
+					"columns"	:[
+									{ data : 'produk' },
+									{ data : 'komponen' },
+									{ data : 'stok_darah.a_positif' },
+									{ data : 'stok_darah.a_negatif' },
+									{ data : 'stok_darah.b_positif' },
+									{ data : 'stok_darah.b_negatif' },
+									{ data : 'stok_darah.ab_positif' },
+									{ data : 'stok_darah.ab_negatif' },
+									{ data : 'stok_darah.o_positif' },
+									{ data : 'stok_darah.o_negatif' },
+								],
+				});
 		});
 
 	});
 </script>
+
+<!-- Modal -->
+<div class="modal fade detailStok" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+		<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			<h3 class="text-center" id="detailDari"></h3>
+			</div>
+			<div class="modal-body">
+					<table  id="detailDarah" class="table table-condensed table-striped table-hover table-bordered">
+					<thead>
+					  <tr>
+					    <th>Produk</th>
+					    <th>Komponen</th> 
+					    <th>A Positif</th>
+					    <th>A Negatif</th>
+					    <th>B Positif</th>
+					    <th>B Negatif</th>
+					    <th>AB Positif</th>
+					    <th>AB Negatif</th>
+					    <th>O Positif</th>
+					    <th>O Negatif</th>
+					  </tr>
+					  </thead>
+					  <tbody>
+					  <tr>
+					    <td>Jill</td>
+					    <td>Smith</td> 
+					    <td>50</td>
+					    <td>50</td>
+					    <td>Jill</td>
+					    <td>Smith</td> 
+					    <td>50</td>
+					    <td>50</td>
+					    <td>50</td>
+					    <td>50</td>
+					  </tr>
+					  </tbody>
+
+					</table>
+			</div>
+			<div class="modal-footer">
+			<button type="button" class="btn btn-primary" data-dismiss="modal">Ok</button>
+		</div>
+    </div>
+  </div>
+</div>
