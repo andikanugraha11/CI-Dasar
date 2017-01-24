@@ -120,8 +120,8 @@
         });
 
         $('#listDarah tbody').on( 'click', 'a', function () {
-		    var data = table.row( $(this).parents('tr') ).data();
-		    alert( data[0]);
+		    var data = table.row($(this).parents('tr') ).data();
+		    console.log(data.stok_id);
 		});
 
 	});
