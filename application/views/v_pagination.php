@@ -2,6 +2,7 @@
 <html>
 <head>
 	<title>Andika Nugraha</title>
+	<link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/css/bootstrap.css')?>">
 </head>
 <body>
 <h1>Coba deh</h1>
