@@ -17,6 +17,7 @@ class cobaLibrary extends CI_Controller
 	public function nama(){
 		
 		$this->dikalib->nama_saya();
-
+		echo "<br/>";
+		$this->dikalib->umur(21);
 	}
 }
