@@ -7,14 +7,23 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class cobaApi_model extends CI_Model
 {
 
-	public function getData($number,$offset){
-		$query = $this->db->get('mock_data',$number,$offset);
+	public function getAllData($page, $size){
+		$query = $this->db->get('mock_data',$size, $page);
 		return $query->result();		
 	}
  
 	public function jumlahData(){
 		$query = $this->db->get('mock_data')->num_rows();
 		return $query;
+	}
+
+	public function getData($id){
+		$data = array(
+						'id' => $id
+					);
+		$this->db->where('id', $id);
+		$query = $this->db->get('mock_data',$data);
+		return $query->result();
 	}
 
 
